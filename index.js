@@ -3,13 +3,15 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const helmet = require("helmet");
-app.use(express.json());
+const cors = require("cors");
 
+app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
+app.use(cors());
 
-const testRouter = require("./routes/testRouter");
-app.use("/", testRouter);
+const teachersRouter = require("./routes/teachersRouter");
+app.use("/", teachersRouter);
 
 const PORT = process.env.PORT || 3001;
 
