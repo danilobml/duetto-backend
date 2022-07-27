@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("./database/client");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
@@ -10,8 +11,11 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
 
+const userRouter = require("./routes/userRouter");
+app.use("/user", userRouter);
+
 const teachersRouter = require("./routes/teachersRouter");
-app.use("/", teachersRouter);
+app.use("/teachers", teachersRouter);
 
 const PORT = process.env.PORT || 3001;
 
