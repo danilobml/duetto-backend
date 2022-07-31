@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const teachersSchema = new Schema(
+const usersSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -13,16 +13,18 @@ const teachersSchema = new Schema(
     styles: [String],
     in_person: { type: Boolean, required: true },
     online: { type: Boolean, required: true },
-    price: { type: Number, required: true },
+    min_price: { type: Number },
+    max_price: { type: Number },
     profile_picture: { type: String },
     audio: { type: String },
     video: { type: String },
     availability: [],
     matches: [String],
+    rejections: [String],
   },
   { timestamps: true }
 );
 
-const Teacher = mongoose.model("Teacher", teachersSchema);
+const User = mongoose.model("User", usersSchema);
 
-module.exports = Teacher;
+module.exports = User;

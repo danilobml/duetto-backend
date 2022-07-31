@@ -1,5 +1,7 @@
 {
     "_id": "9790379",
+    "email": "dan@gmail.com",
+    "password": "uhuu",
     "student": true,
     "teacher": false,
     "name": "Dan Bar",
@@ -12,7 +14,7 @@
     "online": true,
     "min_price": 0,
     "max_price": 50,
-    "profile_picture": "URL",
+    "profile_picture": "https://a-taste-of-history-backend.herokuapp.com/authors/danilo_lima.png",
     "audio": "",
     "video": "",
     "matches": []
