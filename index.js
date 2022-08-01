@@ -12,10 +12,16 @@ app.use(helmet());
 app.use(cors());
 
 const userRouter = require("./routes/userRouter");
-app.use("/user", userRouter);
+app.use("/users", userRouter);
 
 const teachersRouter = require("./routes/teachersRouter");
 app.use("/teachers", teachersRouter);
+
+const matchesRouter = require("./routes/matchesRouter");
+app.use("/matches", matchesRouter);
+
+const rejectionsRouter = require("./routes/rejectionsRouter");
+app.use("/rejections", rejectionsRouter);
 
 const PORT = process.env.PORT || 3001;
 

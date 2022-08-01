@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const usersSchema = new Schema(
+const userSchema = new Schema(
   {
     name: { type: String, required: true },
+    role: { type: String, required: true, enum: ["teacher", "student"] },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     age: { type: Number },
@@ -13,18 +14,17 @@ const usersSchema = new Schema(
     styles: [String],
     in_person: { type: Boolean, required: true },
     online: { type: Boolean, required: true },
+    price: { type: Number },
     min_price: { type: Number },
     max_price: { type: Number },
     profile_picture: { type: String },
     audio: { type: String },
     video: { type: String },
     availability: [],
-    matches: [String],
-    rejections: [String],
   },
   { timestamps: true }
 );
 
-const User = mongoose.model("User", usersSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

@@ -1,11 +1,21 @@
 const express = require("express");
-// const loggedUserData = require("../data/mockDataLoggedUser.json");
 const User = require("../models/User");
 
-const get_user = async (req, res) => {
+const get_logged_user = async (req, res) => {
+  const { email } = req.params;
   try {
-    const getUser = await User.find({});
-    res.json(getUser);
+    const getLoggedUser = await User.findOne({ $email: email });
+    res.json(getLoggedUser);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+const get_other_users = async (req, res) => {
+  const { email } = req.params;
+  try {
+    const getUsers = await User.find({ email: { $ne: email } });
+    res.json(getUsers);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -33,4 +43,4 @@ const partially_update_user = async (req, res) => {
   }
 };
 
-module.exports = { get_user, create_new_user, partially_update_user };
+module.exports = { get_logged_user, get_other_users, create_new_user, partially_update_user };
