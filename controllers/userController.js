@@ -1,7 +1,7 @@
-const express = require("express");
-const User = require("../models/User");
+import express from "express"
+import User from "../models/User.js"
 
-const get_logged_user = async (req, res) => {
+export const get_logged_user = async (req, res) => {
   const { email } = req.params;
   try {
     const getLoggedUser = await User.findOne({ $email: email });
@@ -11,7 +11,7 @@ const get_logged_user = async (req, res) => {
   }
 };
 
-const get_other_users = async (req, res) => {
+export const get_other_users = async (req, res) => {
   const { email } = req.params;
   try {
     const getUsers = await User.find({ email: { $ne: email } });
@@ -21,7 +21,7 @@ const get_other_users = async (req, res) => {
   }
 };
 
-const create_new_user = async (req, res) => {
+export const create_new_user = async (req, res) => {
   const user = req.body;
   try {
     const createdUser = await User.create(user);
@@ -31,7 +31,7 @@ const create_new_user = async (req, res) => {
   }
 };
 
-const partially_update_user = async (req, res) => {
+export const partially_update_user = async (req, res) => {
   const { id } = req.params;
   const { key, value } = req.body;
   try {
@@ -42,5 +42,3 @@ const partially_update_user = async (req, res) => {
     console.log(error.message);
   }
 };
-
-module.exports = { get_logged_user, get_other_users, create_new_user, partially_update_user };

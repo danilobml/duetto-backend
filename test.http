@@ -1,0 +1,22 @@
+POST http://localhost:3001/results
+Content-Type: application/json
+
+{ "uid1": "91283712", "uid2": "594ced02ed345b2b049222c5", "match1": "594ced02ed345b2b049222c6", "match2": "MATCH" }
+
+
+####
+POST http://localhost:3001/results
+Content-Type: application/json
+
+{ "me": "594ced02ed345b2b049222c5", "them": "594ced02ed345b2b049222c6"}
+
+
+
+
+# {
+#     uids: [321,123] ($all : [me, them],
+#     results {
+#         321: "MATCH",
+#         123: "MATCH",
+#     }
+# }

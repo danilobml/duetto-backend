@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose"
 
 mongoose
   .connect(process.env.MONGO_DB, {
@@ -11,4 +11,4 @@ mongoose
 const client = mongoose.connection;
 client.on("error", (e) => console.log(e.message));
 
-module.exports = client;
+export default client;

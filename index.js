@@ -1,20 +1,21 @@
-require("dotenv").config();
-require("./database/client");
-const express = require("express");
+import 'dotenv/config'
+import "./database/client.js";
+import express from "express";
+import morgan from "morgan";
+import helmet from "helmet";
+import cors from "cors";
+import { userRouter } from "./routes/userRouter.js";
+import { resultsRouter } from "./routes/resultsRouter.js";
+
 const app = express();
-const morgan = require("morgan");
-const helmet = require("helmet");
-const cors = require("cors");
 
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
 
-const userRouter = require("./routes/userRouter");
 app.use("/users", userRouter);
 
-const resultsRouter = require("./routes/resultsRouter");
 app.use("/results", resultsRouter);
 
 const PORT = process.env.PORT || 3001;
