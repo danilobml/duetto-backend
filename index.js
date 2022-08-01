@@ -14,14 +14,8 @@ app.use(cors());
 const userRouter = require("./routes/userRouter");
 app.use("/users", userRouter);
 
-const teachersRouter = require("./routes/teachersRouter");
-app.use("/teachers", teachersRouter);
-
-const matchesRouter = require("./routes/matchesRouter");
-app.use("/matches", matchesRouter);
-
-const rejectionsRouter = require("./routes/rejectionsRouter");
-app.use("/rejections", rejectionsRouter);
+const resultsRouter = require("./routes/resultsRouter");
+app.use("/results", resultsRouter);
 
 const PORT = process.env.PORT || 3001;
 
