@@ -14,7 +14,7 @@ export const get_all_users = async (req, res) => {
 export const get_logged_user = async (req, res) => {
   const { email } = req.params;
   try {
-    const getLoggedUser = await User.findOne({ $email: email });
+    const getLoggedUser = await User.findOne({ email: email });
     res.json(getLoggedUser);
   } catch (error) {
     res.status(500).send(error.message);
@@ -24,7 +24,8 @@ export const get_logged_user = async (req, res) => {
 export const get_other_users = async (req, res) => {
   const { email } = req.params;
   try {
-    const getUsers = await User.find({ email: { $ne: email } });
+    const loggedUser = await User.findOne({ email: email });
+    const getUsers = await User.find({ email: { $ne: email }, _id: { $nin: loggedUser.rejections } });
     res.json(getUsers);
   } catch (error) {
     res.status(500).send(error.message);

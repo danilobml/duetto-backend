@@ -4,17 +4,9 @@ import { RESULT_ENUM } from "../enums.js";
 
 const resultSchema = new Schema(
   {
-    uids: [mongoose.Types.ObjectId],
-    results: {
-      uid1: {
-        _id: mongoose.Types.ObjectId,
-        status: { type: String, enum: Object.values(RESULT_ENUM) },
-      },
-      uid2: {
-        _id: mongoose.Types.ObjectId,
-        status: { type: String, enum: Object.values(RESULT_ENUM) },
-      },
-    },
+    uid1: { type: mongoose.Types.ObjectId, required: true },
+    uid2: { type: mongoose.Types.ObjectId, required: true },
+    status: Object.values(RESULT_ENUM),
   },
   { timestamps: true }
 );

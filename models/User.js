@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -21,6 +22,8 @@ const userSchema = new Schema(
     audio: { type: String },
     video: { type: String },
     availability: [],
+    selections: [String],
+    rejections: [String],
   },
   { timestamps: true }
 );
