@@ -25,6 +25,13 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
+userSchema.methods.createToken = function () {
+  const payload = { _id: this._id };
+  const secretKey = process.env.JWT_SECRET;
+  const token = jwt.sign(payload, secretKey, { expiresIn: "1h" });
+  return token;
+};
+
 const User = mongoose.model("User", userSchema);
 
-export default User
+export default User;

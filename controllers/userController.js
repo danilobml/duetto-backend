@@ -1,5 +1,15 @@
-import express from "express"
-import User from "../models/User.js"
+import express from "express";
+import User from "../models/User.js";
+import bcrypt from "bcrypt";
+
+export const get_all_users = async (req, res) => {
+  try {
+    const getAllUsers = await User.find({});
+    res.json(getAllUsers);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 
 export const get_logged_user = async (req, res) => {
   const { email } = req.params;
@@ -22,10 +32,35 @@ export const get_other_users = async (req, res) => {
 };
 
 export const create_new_user = async (req, res) => {
-  const user = req.body;
+  const { name, role, email, password, age, phone, location, instruments, style, in_person, online, price, min_price, max_price, profile_picture, audio, video, availability } = req.body;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   try {
-    const createdUser = await User.create(user);
-    res.json(createdUser);
+    const newUser = await User.create({
+      name,
+      role,
+      email,
+      password: hashedPassword,
+      age,
+      phone,
+      location,
+      instruments,
+      style,
+      in_person,
+      online,
+      price,
+      min_price,
+      max_price,
+      profile_picture,
+      audio,
+      video,
+      availability,
+    });
+
+    const token = newUser.createToken();
+
+    res.set("x-authorization-token", token).json({ _id: newUser._id, email: newUser.email });
   } catch (error) {
     res.status(500).send(error.message);
   }

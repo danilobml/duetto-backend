@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import "dotenv/config";
 import "./database/client.js";
 import express from "express";
 import morgan from "morgan";
@@ -6,6 +6,7 @@ import helmet from "helmet";
 import cors from "cors";
 import { userRouter } from "./routes/userRouter.js";
 import { resultsRouter } from "./routes/resultsRouter.js";
+import { authenticationRouter } from "./routes/authenticationRouter.js";
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(cors());
 app.use("/users", userRouter);
 
 app.use("/results", resultsRouter);
+
+app.use("/auth", authenticationRouter);
 
 const PORT = process.env.PORT || 3001;
 
