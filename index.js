@@ -7,6 +7,8 @@ import cors from "cors";
 import { userRouter } from "./routes/userRouter.js";
 import { resultsRouter } from "./routes/resultsRouter.js";
 import { authenticationRouter } from "./routes/authenticationRouter.js";
+import { paymentRouter } from "./routes/paymentRouter.js";
+import bodyParser from "body-parser";
 
 const app = express();
 
@@ -14,12 +16,16 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use("/users", userRouter);
 
 app.use("/results", resultsRouter);
 
 app.use("/auth", authenticationRouter);
+
+app.use("/payment", paymentRouter);
 
 const PORT = process.env.PORT || 3001;
 
