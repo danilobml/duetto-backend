@@ -28,7 +28,7 @@ app.use("/auth", authenticationRouter);
 
 app.use("/payment", paymentRouter);
 
-app.use("/booking", bookingsRouter);
+app.use("/bookings", bookingsRouter);
 
 const PORT = process.env.PORT || 3001;
 

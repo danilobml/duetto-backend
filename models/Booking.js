@@ -15,7 +15,7 @@ const bookingSchema = new Schema(
     date: { type: String, required: true },
     time: { type: String, required: true },
     online: { type: Boolean, required: true },
-    confirmed: { type: Boolean, required: true },
+    status: { type: String, enum: ["Confirmed", "Cancelled", "Taken"] },
   },
   { timestamps: true }
 );
