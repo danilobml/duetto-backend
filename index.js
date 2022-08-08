@@ -8,6 +8,7 @@ import { userRouter } from "./routes/userRouter.js";
 import { resultsRouter } from "./routes/resultsRouter.js";
 import { authenticationRouter } from "./routes/authenticationRouter.js";
 import { paymentRouter } from "./routes/paymentRouter.js";
+import { bookingsRouter } from "./routes/bookingsRouter.js";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -26,6 +27,8 @@ app.use("/results", resultsRouter);
 app.use("/auth", authenticationRouter);
 
 app.use("/payment", paymentRouter);
+
+app.use("/booking", bookingsRouter);
 
 const PORT = process.env.PORT || 3001;
 
