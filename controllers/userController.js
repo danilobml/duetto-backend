@@ -1,4 +1,3 @@
-import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
@@ -8,6 +7,39 @@ export const get_all_users = async (req, res) => {
     res.json(getAllUsers);
   } catch (error) {
     res.status(500).send(error.message);
+  }
+};
+
+export const get_other_users = async (req, res) => {
+  const { email } = req.params;
+  try {
+    const loggedUser = await User.findOne({ email: email });
+    const getUsers = await User.find({ email: { $ne: email }, _id: { $nin: loggedUser.rejections }, role: { $ne: loggedUser.role } });
+    res.json(getUsers);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+export const get_filtered_users = async (req, res) => {
+  const { email, filter } = req.params;
+
+  if (filter === "location" || filter === "online" || filter === "in_person") {
+    try {
+      const loggedUser = await User.findOne({ email: email });
+      const getUsers = await User.find({ email: { $ne: email }, _id: { $nin: loggedUser.rejections }, _id: { $nin: loggedUser.selections }, role: { $ne: loggedUser.role }, filter: loggedUser[filter] });
+      res.json(getUsers);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  } else {
+    try {
+      const loggedUser = await User.findOne({ email: email });
+      const getUsers = await User.find({ email: { $ne: email }, _id: { $nin: loggedUser.rejections }, _id: { $nin: loggedUser.selections }, role: { $ne: loggedUser.role }, filter: { $nin: loggedUser[filter] } });
+      res.json(getUsers);
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
   }
 };
 
@@ -30,17 +62,6 @@ export const user_check = async (req, res) => {
     res.send("invalid");
   } else {
     res.status(200).send(email);
-  }
-};
-
-export const get_other_users = async (req, res) => {
-  const { email } = req.params;
-  try {
-    const loggedUser = await User.findOne({ email: email });
-    const getUsers = await User.find({ email: { $ne: email }, _id: { $nin: loggedUser.rejections } });
-    res.json(getUsers);
-  } catch (error) {
-    res.status(500).send(error.message);
   }
 };
 
@@ -98,7 +119,7 @@ export const fully_update_user = async (req, res) => {
       new: true,
       runValidators: true,
     });
-    if (!updatedUser) return res.status(404).send("No such user");
+    if (!updatedUser) return res.status(404).send("User not found");
     res.json(updatedUser);
   } catch (error) {
     console.log(error.message);
