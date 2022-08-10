@@ -6,6 +6,7 @@ const resultSchema = new Schema(
   {
     uid1: { type: mongoose.Types.ObjectId, required: true },
     uid2: { type: mongoose.Types.ObjectId, required: true },
+    chatChannel: { type: String },
     status: Object.values(RESULT_ENUM),
   },
   { timestamps: true }

@@ -10,6 +10,7 @@
     "mongoose": "^6.5.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.7",
+    "pusher": "^5.1.1-beta",
     "stripe": "^10.0.0",
     "validator": "^13.7.0"
   },

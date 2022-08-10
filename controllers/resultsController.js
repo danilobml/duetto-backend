@@ -18,7 +18,8 @@ export const get_combined_results = async (req, res) => {
   // WARNING REPLACE THIS WITH AUTH ID
   const { me, them } = req.body;
   try {
-    const getResults = await Result.find({ $or: [{ uid1: req.session._id }, { uid2: req.session._id }], status1: RESULT_ENUM.ACCEPT, status2: RESULT_ENUM.ACCEPT });
+    const getResults = await Result.find();
+    // const getResults = await Result.find({$and: [ $or: [{ uid1: req.session._id }, { uid2: req.session._id }]});
     res.json(getResults);
   } catch (error) {
     res.status(500).send(error.message);

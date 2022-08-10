@@ -12,9 +12,20 @@ export const get_all_users = async (req, res) => {
 
 export const get_other_users = async (req, res) => {
   const { email } = req.params;
+  let { f } = req.query;
+  if (f) {
+    f = f.split(",");
+  }
   try {
     const loggedUser = await User.findOne({ email: email });
-    const getUsers = await User.find({ email: { $ne: email }, _id: { $nin: loggedUser.rejections }, role: { $ne: loggedUser.role } });
+
+    const queryFilterObject = {};
+    if (f) {
+      f.forEach((filterKey) => {
+        queryFilterObject[filterKey] = loggedUser[filterKey];
+      });
+    }
+    const getUsers = await User.find({ ...queryFilterObject, email: { $ne: email }, _id: { $nin: loggedUser.rejections }, role: { $ne: loggedUser.role } });
     res.json(getUsers);
   } catch (error) {
     res.status(500).send(error.message);
@@ -23,7 +34,6 @@ export const get_other_users = async (req, res) => {
 
 export const get_filtered_users = async (req, res) => {
   const { email, filter } = req.params;
-
   if (filter === "location" || filter === "online" || filter === "in_person") {
     try {
       const loggedUser = await User.findOne({ email: email });
