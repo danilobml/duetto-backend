@@ -22,27 +22,35 @@ export const get_other_users = async (req, res) => {
   }
 };
 
-// export const get_other_users = async (req, res) => {
-//   const { email } = req.params;
-//   let { f } = req.query;
-//   if (f) {
-//     f = f.split(",");
-//   }
-//   try {
-//     const loggedUser = await User.findOne({ email: email });
+export const get_filtered_other_users = async (req, res) => {
+  const { email } = req.params;
+  let { f } = req.query;
 
-//     const queryFilterObject = {};
-//     if (f) {
-//       f.forEach((filterKey) => {
-//         queryFilterObject[filterKey] = loggedUser[filterKey];
-//       });
-//     }
-//     const getUsers = await User.find({ ...queryFilterObject, email: { $ne: email }, _id: { $nin: loggedUser.rejections }, role: { $ne: loggedUser.role } });
-//     res.json(getUsers);
-//   } catch (error) {
-//     res.status(500).send(error.message);
-//   }
-// };
+  console.log(f);
+
+  try {
+    const loggedUser = await User.findOne({ email: email });
+    let getUsers = [];
+    if (f) {
+      f = f.split(",");
+      const queryFilterObject = {};
+      f.filter((x) => x !== "instruments" && x !== "styles").forEach((filterKey) => {
+        queryFilterObject[filterKey] = loggedUser[filterKey];
+      });
+      // f.filter(x=> x === "instruments" && x === "styles").forEach((filterKey) => {
+      //   queryFilterObject[filterKey] = loggedUser[filterKey];
+      // });
+      console.log(f);
+      console.log(queryFilterObject);
+      getUsers = await User.find({ ...queryFilterObject, email: { $ne: email }, _id: { $nin: loggedUser.rejections }, role: { $ne: loggedUser.role } });
+    } else {
+      getUsers = await User.find({ email: { $ne: email }, _id: { $nin: loggedUser.rejections }, role: { $ne: loggedUser.role } });
+    }
+    res.json(getUsers);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
 
 export const get_filtered_users = async (req, res) => {
   const { email, filter } = req.params;

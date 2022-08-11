@@ -1,6 +1,6 @@
 import express from "express";
 export const userRouter = express.Router();
-import { get_all_users, get_logged_user, get_other_users, create_new_user, partially_update_user, fully_update_user, user_check, get_filtered_users } from "../controllers/userController.js";
+import { get_all_users, get_logged_user, get_other_users, create_new_user, partially_update_user, fully_update_user, user_check, get_filtered_users, get_filtered_other_users } from "../controllers/userController.js";
 
 import { authorizeUser } from "../middlewares/authorizeUser.js";
 
@@ -10,7 +10,7 @@ userRouter.post("/check", user_check);
 
 userRouter.get("/logged_user/:email", get_logged_user);
 
-userRouter.get("/:email", get_other_users);
+userRouter.get("/:email", get_filtered_other_users);
 
 userRouter.post("/create", create_new_user);
 
