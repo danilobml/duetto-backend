@@ -24,6 +24,7 @@ const userSchema = new Schema(
     availability: [],
     selections: [String],
     rejections: [String],
+    level: { type: String, enum: ["beginner", "intermediate", "adavanced"] },
   },
   { timestamps: true }
 );
