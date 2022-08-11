@@ -16,6 +16,6 @@ userRouter.post("/create", create_new_user);
 
 userRouter.patch("/:id", partially_update_user);
 
-userRouter.put("/:id", fully_update_user);
+userRouter.put("/:id", authorizeUser, fully_update_user);
 
 userRouter.get("/:email/:filter", get_filtered_users);
